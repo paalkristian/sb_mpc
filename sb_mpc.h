@@ -8,23 +8,23 @@
 #ifndef SB_MPC_H_
 #define SB_MPC_H_
 
-#include <Eigen/Dense>
+#include "Eigen\Dense"
 #include "ship_model.h"
 #include "obstacle.h"
 
 #include <vector>
 
-class simulationBasedMpc
+class SimulationBasedMpc
 {
 public:
 	/// Constructor
-	simulationBasedMpc();
+	SimulationBasedMpc();
 
 	/// Destructor
-	~simulationBasedMpc();
+	~SimulationBasedMpc();
 
 	/**
-	 *  @brief Sets the offset pair (u_os_best, psi_os_best) with the lowst cost
+	 * @brief Sets the offset pair (u_os_best, psi_os_best) with the lowest cost
 	 *
 	 * @param u_os_best The reference parameter to store the best speed offset.
 	 * @param psi_os_best The reference parameter to store the best heading offset.
@@ -33,7 +33,14 @@ public:
 	 * @param asv_state The state of the asv: x, y, psi, u, v, r.
 	 * @param obst_states The states of the obstacles : x, y, u, v, A, B, C, D. (A, B, C, D - size from AIS)
 	 */
-	void getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d, const Eigen::Matrix<double,6,1>& asv_state, const Eigen::Matrix<double,-1,9>& obst_states);
+	void getBestControlOffset(
+		double &u_os_best, 
+		double &psi_os_best, 
+		double u_d, 
+		double psi_d, 
+		const Eigen::Matrix<double,6,1>& asv_state, 
+		const Eigen::Matrix<double,-1,9>& obst_states
+	);
 
 	/**
 	 * @brief  Returns the simulation time (prediction horizon) [sec].
@@ -44,11 +51,11 @@ public:
 	 */
 	double getDt();
 	/**
-	 * @brief Returns the wheight on time to evaluation instant
+	 * @brief Returns the weight on time to evaluation instant
 	 */
 	double getP();
 	/**
-	 * @brief Returns the wheight on distance at evaluation instant
+	 * @brief Returns the weight on distance at evaluation instant
 	 */
 	double getQ();
 	/**
@@ -75,7 +82,7 @@ public:
 	 */
 	double getPhiOT();
 	/**
-	 * @brief Returns the angle whitin which an obstacle is said to be head
+	 * @brief Returns the angle within which an obstacle is said to be head
 	 * on [deg].
 	 */
 	double getPhiHO();
@@ -195,7 +202,7 @@ private:
 	Eigen::VectorXd Chi_ca_;
 	Eigen::VectorXd P_ca_;
 
-	shipModel *asv;
+	ShipModel *asv;
 	std::vector<obstacle*> obst_vect;
 
 };

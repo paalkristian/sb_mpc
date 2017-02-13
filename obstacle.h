@@ -9,7 +9,7 @@
 #define OBSTACLE_H_
 
 #include <vector>
-#include <Eigen/Dense>
+#include "Eigen\Dense"
 
 class obstacle
 {

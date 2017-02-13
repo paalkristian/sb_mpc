@@ -7,7 +7,9 @@
 
 #include "ship_model.h"
 
-shipModel::shipModel(double T, double dt)
+static const double M_PI = 3.14159265359;
+
+ShipModel::ShipModel(double T, double dt)
 : n_samp_(T/dt)
 {
 	x.resize(n_samp_);
@@ -25,7 +27,7 @@ shipModel::shipModel(double T, double dt)
 
 	// Model parameters
 	rudder_d = 4.0; // distance from rudder to CG
-	A_ = 5; // [m]  in reality the length is 14,5 m.
+	A_ = 5;				// [m]  in reality the length is 14,5 m.
 	B_ = 5; // [m]
 	C_ = 1.5; // [m]
 	D_ = 1.5; // [m]
@@ -78,84 +80,84 @@ shipModel::shipModel(double T, double dt)
 }
 
 
-shipModel::~shipModel(){
+ShipModel::~ShipModel(){
 }
 
 
-Eigen::VectorXd shipModel::getX(){
+Eigen::VectorXd ShipModel::getX(){
 	return x;
 }
 
-Eigen::VectorXd shipModel::getY(){
+Eigen::VectorXd ShipModel::getY(){
 	return y;
 }
 
-Eigen::VectorXd shipModel::getPsi(){
+Eigen::VectorXd ShipModel::getPsi(){
 	return psi;
 }
 
-Eigen::VectorXd shipModel::getU(){
+Eigen::VectorXd ShipModel::getU(){
 	return u;
 }
 
-Eigen::VectorXd shipModel::getV(){
+Eigen::VectorXd ShipModel::getV(){
 	return v;
 }
 
-Eigen::VectorXd shipModel::getR(){
+Eigen::VectorXd ShipModel::getR(){
 	return r;
 }
 
-double shipModel::getA(){
+double ShipModel::getA(){
 	return A_;
 }
 
-double shipModel::getB(){
+double ShipModel::getB(){
 	return B_;
 }
 
-double shipModel::getC(){
+double ShipModel::getC(){
 	return C_;
 }
 
-double shipModel::getD(){
+double ShipModel::getD(){
 	return D_;
 }
 
-double shipModel::getL(){
+double ShipModel::getL(){
 	return l;
 }
 
-double shipModel::getW(){
+double ShipModel::getW(){
 	return w;
 }
 
 
-void  shipModel::setA(double A){
+void  ShipModel::setA(double A){
 	A_ = A;
 }
 
-void shipModel::setB(double B){
+void ShipModel::setB(double B){
 	B_ = B;
 }
 
-void shipModel::setC(double C){
+void ShipModel::setC(double C){
 	C_ = C;
 }
 
-void shipModel::setD(double D){
+void ShipModel::setD(double D){
 	D_ = D;
 }
 
 
-void shipModel::calculate_position_offsets(){
+void ShipModel::calculate_position_offsets(){
 	os_x = A_-B_;
 	os_y = D_-C_;
 }
 
 
 
-void shipModel::eulersMethod(const Eigen::Matrix<double,6,1>& state, double u_d, double psi_d)
+void ShipModel::eulersMethod(const Eigen::Matrix<double,6,1>& state, double u_d, double psi_d)
 {
 
 	psi(0) = normalize_angle(state(2));
@@ -207,7 +209,7 @@ void shipModel::eulersMethod(const Eigen::Matrix<double,6,1>& state, double u_d,
 	}
 }
 
-void shipModel::linearPrediction(const Eigen::Matrix<double,6,1>& state, double u_d, double psi_d){
+void ShipModel::linearPrediction(const Eigen::Matrix<double,6,1>& state, double u_d, double psi_d){
 
 	psi(0) = normalize_angle(psi_d);
 	x(0) = state(0) + os_x*cos(state(2)) - os_y*sin(state(2));
@@ -235,7 +237,7 @@ void shipModel::linearPrediction(const Eigen::Matrix<double,6,1>& state, double 
 }
 
 
-void shipModel::updateCtrlInput(double u_d, double psi_d, int i){
+void ShipModel::updateCtrlInput(double u_d, double psi_d, int i){
 	double Fx = Cvv[0] + Dvv[0] + Kp_u*M*(u_d - u(i));
 	double Fy = 0.0;
 
@@ -259,7 +261,7 @@ void shipModel::updateCtrlInput(double u_d, double psi_d, int i){
 }
 
 
-double shipModel::normalize_angle(double angle){
+double ShipModel::normalize_angle(double angle){
 
 	if( isinf(angle)) return angle;
 
@@ -275,7 +277,7 @@ double shipModel::normalize_angle(double angle){
 }
 
 
-double shipModel::normalize_angle_diff(double angle, double angle_ref){
+double ShipModel::normalize_angle_diff(double angle, double angle_ref){
 	double new_angle;
 	double diff = angle_ref - angle;
 

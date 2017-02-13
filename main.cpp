@@ -9,7 +9,7 @@
 #include "sb_mpc.h"
 #include "ship_model.h"
 
-#include "Eigen/Dense"
+#include "Eigen\Dense"
 #include "iostream"
 
 int main(){
@@ -22,7 +22,7 @@ int main(){
 	double u_os;
 	double psi_os;
 
-	simulationBasedMpc *sb_mpc = new simulationBasedMpc();
+	SimulationBasedMpc *sb_mpc = new SimulationBasedMpc();
 
 	Eigen::Matrix<double, 6, 1> asv_state;
 	asv_state << 0, 0, -0.0959975, 6.88277, 0, 0;
@@ -36,7 +36,7 @@ int main(){
 
 	sb_mpc->getBestControlOffset(u_os, psi_os, u_d, psi_d, asv_state, obst_states);
 
-	std::cout << "u_ os : " << u_os << std::endl;
+	std::cout << "u_os : " << u_os << std::endl;
 	std::cout << "psi_os : " << psi_os << std::endl;
 
 	return 0;

@@ -9,19 +9,20 @@
 #define SHIP_MODEL_H_
 
 #include <vector>
+#include "Eigen\Dense"
 #include <cmath>
-#include <Eigen/Dense>
 #include <string>
 
-class shipModel
+
+class ShipModel
 {
 	public:
 
 	/// Constructor
-	shipModel(double T, double dt);
+	ShipModel(double T, double dt);
 
 	/// Destructor
-	~shipModel();
+	~ShipModel();
 
 	void eulersMethod(const Eigen::Matrix<double,6,1>& state, double u_d, double psi_d);
 
