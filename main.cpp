@@ -12,6 +12,7 @@
 #include "Eigen\Dense"
 #include "iostream"
 
+#include "sb_mpc_api.h"
 int main(){
 
 	// Guidance parameters
@@ -22,6 +23,7 @@ int main(){
 	double u_os;
 	double psi_os;
 
+	/*
 	SimulationBasedMpc *sb_mpc = new SimulationBasedMpc();
 
 	Eigen::Matrix<double, 6, 1> asv_state;
@@ -35,9 +37,13 @@ int main(){
 				 -522.324,  6325.05,  2.27242,        0,        0,       10,       10,       10,       10;
 
 	sb_mpc->getBestControlOffset(u_os, psi_os, u_d, psi_d, asv_state, obst_states);
+	*/
+	
+	getControlOffset(u_d, psi_d, u_os, psi_os);
 
 	std::cout << "u_os : " << u_os << std::endl;
 	std::cout << "psi_os : " << psi_os << std::endl;
-
+	int a;
+	std::cin >> a;
 	return 0;
 };

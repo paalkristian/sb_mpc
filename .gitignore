@@ -1,3 +1,4 @@
 *.sln
-SB_MPC*
-SB_MPC.VC.db
+SB_MPC/*
+SB_MPC.VC.*
+.vs/*
